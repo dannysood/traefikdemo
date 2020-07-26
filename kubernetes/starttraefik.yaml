@@ -76,6 +76,26 @@ spec:
     app: traefik-ingress-lb
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
+      targetPort: 8080
       name: dashboard
   type: LoadBalancer
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-web-ui
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-ingress-service-api
+          servicePort: http
+  # tls:
+  #  - secretName: traefik-ui-tls-cert
