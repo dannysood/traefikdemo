@@ -52,7 +52,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-ingress-service
+  name: traefik-ingress-service-api
 spec:
   selector:
     app: expressapi
@@ -65,6 +65,16 @@ spec:
       port: 443
       name: https
       targetPort: nodejs-port
+  type: LoadBalancer
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service-dashboard
+spec:
+  selector:
+    app: traefik-ingress-lb
+  ports:
     - protocol: TCP
       port: 8080
       name: dashboard
